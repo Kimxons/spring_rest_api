@@ -66,13 +66,13 @@ public class Client {
         this.insuranceProducts = insuranceProducts;
     }
 
-    public Long getClientId() {
-        return this.id;
-    }
+    // public static Long getClientId() {
+    //     return this.id;
+    // }
 
-    public String getFirstName() {
-        return this.firstName;
-    }
+    // public static String getFirstName() {
+    //     return this.firstName;
+    // }
 
     public String getLastName() {
         return this.lastName;
@@ -108,5 +108,13 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static Long getClientId() {
+        return null;
+    }
+
+    public static Object getFirstName() {
+        return null;
     }
 }

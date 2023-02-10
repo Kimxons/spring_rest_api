@@ -31,9 +31,9 @@ public class NextOfKin {
         this.id = k_id;
     }
 
-    public String getK_name() {
-        return k_name;
-    }
+    // public static String getK_name() {
+    //     return k_name;
+    // }
 
     public void setK_name(String k_name) {
         this.k_name = k_name;
@@ -45,5 +45,9 @@ public class NextOfKin {
 
     public void setK_contact(String k_contact) {
         this.k_contact = k_contact;
+    }
+
+    public static Long getK_name() {
+        return null;
     }
 }

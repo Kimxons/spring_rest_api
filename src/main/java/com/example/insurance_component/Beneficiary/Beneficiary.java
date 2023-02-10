@@ -12,7 +12,7 @@ public class Beneficiary {
     @Column(name = "BENEFICIARY_ID")
     Long id;
 
-    private String b_name;
+    private static String b_name;
     private String b_phoneNumber;
 
     public Beneficiary() {
@@ -22,25 +22,21 @@ public class Beneficiary {
     // constructor
     public Beneficiary(Long b_id, String b_name, String b_phoneNumber) {
         this.id = b_id;
-        this.b_name = b_name;
+        Beneficiary.b_name = b_name;
         this.b_phoneNumber = b_phoneNumber;
     }
 
     // Getter and setter methods
-    public Long getB_Id() {
-        return this.id;
-    }
-
     public void setB_id(Long b_id) {
         this.id = b_id;
     }
 
-    public String getB_Name() {
-        return this.b_name;
+    public static String getB_Name() {
+        return b_name;
     }
 
     public void setB_Name(String b_name) {
-        this.b_name = b_name;
+        Beneficiary.b_name = b_name;
     }
 
     public String getB_PhoneNumber() {

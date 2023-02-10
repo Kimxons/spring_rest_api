@@ -21,10 +21,6 @@ public class InsuranceProducts {
     }
 
     // Getters and Setters
-    public Long getP_id() {
-        return id;
-    }
-
     public void setP_id(Long p_id) {
         this.id = p_id;
     }
@@ -35,5 +31,9 @@ public class InsuranceProducts {
 
     public void setProductType(String productType) {
         ProductType = productType;
+    }
+
+    public static long getP_id() {
+        return 0;
     }
 }
