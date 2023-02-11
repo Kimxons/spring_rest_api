@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.insurance_component.NextOfKin.NextOfKin;
-import com.example.insurance_component.NextOfKin.NextOfKinService;
-
 public class InsuranceProductsController {
     private final InsuranceProductsService insuranceProductsService;
     
@@ -21,22 +18,22 @@ public class InsuranceProductsController {
     public InsuranceProductsController(InsuranceProductsService insuranceProductsService){
         this.insuranceProductsService = insuranceProductsService;
     }
-    @GetMapping
-    public List<NextOfKin> getNextOfKin(){
-        return NextOfKinService.getNextOfKin();
+    @GetMapping("/products/{id}")
+    public List<InsuranceProducts> getInsuranceProducts(){
+        return InsuranceProductsService.getInsuranceProducts();
     }
 
-    @PostMapping
+    @PostMapping("/products/{id}")
     public void registerInsuranceProduct(@RequestBody InsuranceProducts insuranceProducts){
         insuranceProductsService.addInsuranceProduct(insuranceProducts);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping("/products/{id}")
     public void deleteInsuranceProduct(@PathVariable("id") Long id){
         insuranceProductsService.deleteInsuranceProduct(id);
     }
     
-    @PutMapping(path = "{id}")
+    @PutMapping(path = "/products/{id}")
     public void updateInsuranceProduct(
         @PathVariable("id") Long id,
         @RequestParam(required = false) String productType

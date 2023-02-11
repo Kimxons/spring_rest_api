@@ -1,120 +1,99 @@
 package com.example.insurance_component.Client;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.insurance_component.Beneficiary.Beneficiary;
 import com.example.insurance_component.InsuranceProducts.InsuranceProducts;
 import com.example.insurance_component.NextOfKin.NextOfKin;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
 
 @Entity
-@Table(name = "client_tbl", schema="RECORDS")
 public class Client {
     @Id
-    @SequenceGenerator(name = "CLIENT_SEQ",  allocationSize = 30)
-
-    @GeneratedValue(strategy=GenerationType.TABLE, generator="CUST_GEN")
-    @Column(name="CLIENT_ID")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     Long id;
 
-    private String firstName;
-    private String lastName;
-    private String otherNames;
-    private String phoneNumber;
+    private static String name;
     private String email;
-    private List<InsuranceProducts> insuranceProducts;
+    private static String phoneNumber;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<InsuranceProducts> insuranceProducts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<NextOfKin> nextOfKins;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private List<Beneficiary> beneficiaries;
 
-    public Client(Long id, String firstName, String lastName, String otherNames, String email,
-            String phoneNumber) {
+    public void setId(Long id) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.otherNames = otherNames;
-        this.email = email;
     }
 
-    public List<Beneficiary> getBeneficiaries() {
-        return this.beneficiaries;
+    public static String getName() {
+        return name;
     }
 
-    public void setBeneficiaries(List<Beneficiary> beneficiaries) {
-        this.beneficiaries = beneficiaries;
-    }
-
-    public List<InsuranceProducts> getInsuranceProducts() {
-        return insuranceProducts;
-    }
-
-    public List<NextOfKin> getNextOfKin() {
-        return nextOfKins;
-    }
-
-    public void setNextOfKin(List<NextOfKin> nextOfKins) {
-        this.nextOfKins = nextOfKins;
-    }
-
-    public void setInsuranceProducts(List<InsuranceProducts> insuranceProducts) {
-        this.insuranceProducts = insuranceProducts;
-    }
-
-    // public static Long getClientId() {
-    //     return this.id;
-    // }
-
-    // public static String getFirstName() {
-    //     return this.firstName;
-    // }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public String getOtherNames() {
-        return this.otherNames;
+    public void setName(String name) {
+        Client.name = name;
     }
 
     public String getEmail() {
-        return this.email;
-    }
-
-    public String getPhoneNumber() {
-        return this.phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setOtherNames(String otherNames) {
-        this.otherNames = otherNames;
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public static Long getClientId() {
-        return null;
+    public static String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public static Object getFirstName() {
-        return null;
+    public void setPhoneNumber(String phoneNumber) {
+        Client.phoneNumber = phoneNumber;
     }
+
+    public List<InsuranceProducts> getInsuranceProducts() {
+        return insuranceProducts;
+    }
+
+    public void setInsuranceProducts(List<InsuranceProducts> insuranceProducts) {
+        this.insuranceProducts = insuranceProducts;
+    }
+
+    public List<NextOfKin> getNextOfKins() {
+        return nextOfKins;
+    }
+
+    public void setNextOfKins(List<NextOfKin> nextOfKins) {
+        this.nextOfKins = nextOfKins;
+    }
+
+    public List<Beneficiary> getBeneficiaries() {
+        return beneficiaries;
+    }
+
+    public void setBeneficiaries(List<Beneficiary> beneficiaries) {
+        this.beneficiaries = beneficiaries;
+    }
+
+    public Client(Long id, String name, String phoneNumber, String email, List<InsuranceProducts> insuranceProducts, List<NextOfKin> nextOfKins,
+            List<Beneficiary> beneficiaries) {
+        this.id = id;
+        Client.name = name;
+        this.email = email;
+        Client.phoneNumber = phoneNumber;
+        this.insuranceProducts = insuranceProducts;
+        this.nextOfKins = nextOfKins;
+        this.beneficiaries = beneficiaries;
+    }
+    
 }

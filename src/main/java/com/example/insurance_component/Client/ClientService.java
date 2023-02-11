@@ -1,14 +1,9 @@
 package com.example.insurance_component.Client;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.example.insurance_component.Beneficiary.Beneficiary;
-import com.example.insurance_component.InsuranceProducts.InsuranceProducts;
-import com.example.insurance_component.NextOfKin.NextOfKin;
 
 import jakarta.transaction.Transactional;
 
@@ -20,13 +15,13 @@ public class ClientService {
         ClientService.clientRepository = clientRepository;
     }
 
-    public static List<Client> getClient() {
+    public List<Client> getClients() {
         return clientRepository.findAll();
     }
 
     public void addClient(Client client){
         Optional<Client> clientOptional;
-        clientOptional = clientRepository.findClientById(Client.getClientId());
+        clientOptional = clientRepository.findClientById(null);
         if(clientOptional.isPresent()){
             throw new IllegalStateException("Client record already available!");
         }
@@ -44,14 +39,30 @@ public class ClientService {
     }
 
     @Transactional
-    public void updateClient(Long id,String firstName, String lastName, String otherNames, String phoneNumber,String email,
-    List<InsuranceProducts> insuranceProducts, List<NextOfKin> nextOfKins, List<Beneficiary> beneficiaries){
-        Client client = clientRepository.findClientById(id)
-        .orElseThrow(() -> new IllegalStateException(
-            "Record for Client with id" + id + "does not exist"
-        ));
-        if (firstName != null && firstName.length() > 0 && !Objects.equals(Client.getFirstName(), firstName)){
-            client.setFirstName(firstName);
+    public Client updateClient(Long id, Client client) throws Exception {
+        Optional<Client> existingClientOptional = clientRepository.findById(id);
+        if (!existingClientOptional.isPresent()) {
+            throw new Exception("Client not found with id " + id);
         }
+        Client existingClient = existingClientOptional.get();
+        existingClient.setName(Client.getName());
+        existingClient.setPhoneNumber(Client.getPhoneNumber());
+        existingClient.setBeneficiaries(null);
+        existingClient.setEmail(null);
+        existingClient.setInsuranceProducts(null);
+        existingClient.setNextOfKins(null);
+        return clientRepository.save(existingClient);
+    }
+
+    public List<Client> findAll() {
+        return null;
+    }
+
+    public Optional<Client> findById(Long id) {
+        return null;
+    }
+
+    public Client save(Client client) {
+        return null;
     }
 }
