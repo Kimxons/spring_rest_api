@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,27 +20,23 @@ public class BeneficiaryController {
         this.beneficiaryService = beneficiaryService;
     }
 
-    @GetMapping
+    @GetMapping("/beneficiary/{id}")
     public List<Beneficiary> getBeneficiaries(){
         return BeneficiaryService.getBeneficiaries();
     }
 
-    @PostMapping
+    @PostMapping("/beneficiary/{id}")
     public void registerNewBeneficiary(@RequestBody Beneficiary beneficiary){
         beneficiaryService.addBeneficiary(beneficiary);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/beneficiary/{id}")
     public void deleteBeneficiary(@PathVariable("id") Long id){
         beneficiaryService.deleteBeneficiary(id);
     }
-    
-    @PutMapping(path = "{id}")
-    public void updateBeneficiary(
-        @PathVariable("id") Long id,
-        @RequestParam(required = false) String b_name,
-        @RequestParam(required = false) String b_phoneNumber
-    ){
-        beneficiaryService.updateBeneficiary(id, b_name, b_phoneNumber);
+
+    @PutMapping("/beneficiary/{id}")
+    public Beneficiary updateBeneficiary(Long id, Beneficiary beneficiary) throws Exception {
+        return beneficiaryService.updateBeneficiary(id, beneficiary);
     }
 }
