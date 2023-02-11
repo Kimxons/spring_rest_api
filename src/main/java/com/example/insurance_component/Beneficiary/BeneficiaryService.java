@@ -22,10 +22,9 @@ public class BeneficiaryService {
         return beneficiaryRepository.findAll();
     }
 
-    // CRUD - Beneficiary
     public void addBeneficiary(Beneficiary beneficiary){
         Optional<Beneficiary> beneficiaryOptional;
-        beneficiaryOptional = beneficiaryRepository.findBeneficiaryByName(Beneficiary.getB_Name());
+        beneficiaryOptional = beneficiaryRepository.findBeneficiaryByName(Beneficiary.getName());
         if(beneficiaryOptional.isPresent()){
             throw new IllegalStateException("Beneficiary record already available!");
         }
@@ -43,16 +42,15 @@ public class BeneficiaryService {
     }
 
     @Transactional
-    public void updateBeneficiary(Long id, String b_name, String b_phoneNumber){
-        Beneficiary beneficiary = beneficiaryRepository.findById(id)
-        .orElseThrow(() -> new IllegalStateException(
-            "Record for Beneficiary with id" + id + "does not exist"
-        ));
-        if (b_name != null && b_name.length() > 0 && !Objects.equals(Beneficiary.getB_Name(), b_name)){
-            beneficiary.setB_Name(b_name);
+    public Beneficiary updateBeneficiary(Long id, Beneficiary beneficiary) throws Exception{
+        Optional<Beneficiary> existingBeneficiaryOptional = beneficiaryRepository.findById(id);
+        if (!existingBeneficiaryOptional.isPresent()){
+            throw new Exception("Beneficiary with id: " + id + "not found");
         }
-        if(b_phoneNumber != null && b_phoneNumber.length() > 0 && !Objects.equals(b_phoneNumber, beneficiary)){
-            beneficiary.setB_PhoneNumber(b_phoneNumber);
-        }
+
+        Beneficiary existingBeneficiary =existingBeneficiaryOptional.get();
+        Beneficiary.setName(Beneficiary.getName());
+        existingBeneficiary.setPhoneNumber(beneficiary.getPhoneNumber());
+        return beneficiaryRepository.save(existingBeneficiary);
     }
 }
